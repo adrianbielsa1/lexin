@@ -33,7 +33,7 @@ class Token:
     kind:   TokenKind
     lexeme: str
 
-class UnrecognisedTokenError(Exception):
+class TokenNotRecognisedError(Exception):
 
     def __init__(self, lexeme):
         self.lexeme = lexeme
@@ -104,7 +104,7 @@ def tokenize(text: str) -> typing.List[Token]:
             index                   += 1
 
         if not last_accepted_tokens:
-            raise UnrecognisedTokenError(lexeme)
+            raise TokenNotRecognisedError(lexeme)
 
         # Trim the lexeme one character before every automaton rejected it and pick the most
         # relevant candidate token.
