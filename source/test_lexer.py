@@ -50,3 +50,47 @@ class TestKeywords(unittest.TestCase):
         ]
 
         self.assertEqual(actual, expected)
+
+class TestMiscellaneous(unittest.TestCase):
+
+    def test_valid_operators(self):
+        for op in ["==", ">", "<", ">=", "<=", "!="]:
+            actual      = lexer.tokenize(op)
+            expected    = [
+                lexer.Token(lexer.TokenKind.OPERATOR, op)
+            ]
+
+            self.assertEqual(actual, expected)
+
+    def test_invalid_operators(self):
+        with self.assertRaises(lexer.TokenNotRecognisedError):
+            for op in ["$=", "%=", "---"]:
+                lexer.tokenize(op)
+
+    def test_valid_numbers(self):
+        for n in ["3.14", "123", "54564345.1", "424242.23", "000"]:
+            actual      = lexer.tokenize(n)
+            expected    = [
+                lexer.Token(lexer.TokenKind.NUMBER, n)
+            ]
+
+            self.assertEqual(actual, expected)
+
+    def test_invalid_numbers(self):
+        with self.assertRaises(lexer.TokenNotRecognisedError):
+            for n in [".00", ".11", "123."]:
+                lexer.tokenize(n)
+
+    def test_valid_identifiers(self):
+        for id in ["hola", "como", "va", "lolsito"]:
+            actual      = lexer.tokenize(id)
+            expected    = [
+                lexer.Token(lexer.TokenKind.IDENTIFIER, id)
+            ]
+
+            self.assertEqual(actual, expected)
+
+    def test_invalid_identifiers(self):
+        with self.assertRaises(lexer.TokenNotRecognisedError):
+            for id in ["$$$", "hol@", "123"]:
+                lexer.tokenize(id)
