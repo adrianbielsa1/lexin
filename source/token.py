@@ -12,7 +12,7 @@ class Token:
 @unique
 class Kind(Enum):
     # Miscellaneous.
-    OPERATOR            = auto(),
+    OPERATOR            = auto(), # ==, >, <, >=, <=, !=, *, /, mod, and, +, -, or
     NUMBER              = auto(),
     IDENTIFIER          = auto(),
     LITERAL             = auto(),
