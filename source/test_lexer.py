@@ -63,9 +63,8 @@ class TestMiscellaneous(unittest.TestCase):
             self.assertEqual(actual, expected)
 
     def test_invalid_operators(self):
-        with self.assertRaises(lexer.TokenNotRecognisedError):
-            for op in ["$=", "%=", "---"]:
-                lexer.tokenize(op)
+        for op in ["$=", "%="]:
+            self.assertRaises(lexer.TokenNotRecognisedError, lexer.tokenize, op)
 
     def test_valid_numbers(self):
         for n in ["3.14", "123", "54564345.1", "424242.23", "000"]:
@@ -77,9 +76,8 @@ class TestMiscellaneous(unittest.TestCase):
             self.assertEqual(actual, expected)
 
     def test_invalid_numbers(self):
-        with self.assertRaises(lexer.TokenNotRecognisedError):
-            for n in [".00", ".11", "123."]:
-                lexer.tokenize(n)
+        for n in [".00", ".11", "123."]:
+            self.assertRaises(lexer.TokenNotRecognisedError, lexer.tokenize, n)
 
     def test_valid_identifiers(self):
         for id in ["hola", "como", "va", "lolsito"]:
@@ -91,6 +89,5 @@ class TestMiscellaneous(unittest.TestCase):
             self.assertEqual(actual, expected)
 
     def test_invalid_identifiers(self):
-        with self.assertRaises(lexer.TokenNotRecognisedError):
-            for id in ["$$$", "hol@"]:
-                lexer.tokenize(id)
+        for id in ["$$$", "hol@"]:
+            self.assertRaises(lexer.TokenNotRecognisedError, lexer.tokenize, id)
