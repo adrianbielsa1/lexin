@@ -14,4 +14,4 @@ python -m unittest
 ```
 which discovers them on its own.
 ## ABOUT
-This project was made by Adrián Bielsa (me), Lucio Calosso Cístola and Tomás Sanchez. It was brought to us by our college's "Syntax and semantics of languages" course's laboratory.
+This project was made by [Adrián Bielsa](www.github.com/adrianbielsa1) (me), [Lucio Calosso Cístola](www.github.com/LucioValentinCalossoCistola) and [Tomas Sanchez](www.github.com/TomasSanchez). It was brought to us by our college's "Syntax and semantics of languages" course's laboratory.
