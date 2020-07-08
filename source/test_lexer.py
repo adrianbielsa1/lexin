@@ -92,5 +92,5 @@ class TestMiscellaneous(unittest.TestCase):
 
     def test_invalid_identifiers(self):
         with self.assertRaises(lexer.TokenNotRecognisedError):
-            for id in ["$$$", "hol@", "123"]:
+            for id in ["$$$", "hol@"]:
                 lexer.tokenize(id)
