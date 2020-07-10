@@ -91,3 +91,55 @@ class TestMiscellaneous(unittest.TestCase):
     def test_invalid_identifiers(self):
         for id in ["$$$", "hol@"]:
             self.assertRaises(lexer.TokenNotRecognisedError, lexer.tokenize, id)
+
+class TestPhrases(unittest.TestCase):
+
+    def test_valid_phrases(self):
+        valid_phrases = {
+            "si aa entonces bb() sino cc()": [
+                lexer.Token(lexer.TokenKind.IF, "si"),
+                lexer.Token(lexer.TokenKind.IDENTIFIER, "aa"),
+                lexer.Token(lexer.TokenKind.THEN, "entonces"),
+                lexer.Token(lexer.TokenKind.IDENTIFIER, "bb"),
+                lexer.Token(lexer.TokenKind.PARENTHESIS_OPEN, "("),
+                lexer.Token(lexer.TokenKind.PARENTHESIS_CLOSE, ")"),
+                lexer.Token(lexer.TokenKind.ELSE, "sino"),
+                lexer.Token(lexer.TokenKind.IDENTIFIER, "cc"),
+                lexer.Token(lexer.TokenKind.PARENTHESIS_OPEN, "("),
+                lexer.Token(lexer.TokenKind.PARENTHESIS_CLOSE, ")")
+            ],
+
+            "mientras tiempoLibre hacer jugarLolsito" : [
+                lexer.Token(lexer.TokenKind.WHILE, "mientras"),
+                lexer.Token(lexer.TokenKind.IDENTIFIER, "tiempoLibre"),
+                lexer.Token(lexer.TokenKind.DO, "hacer"),
+                lexer.Token(lexer.TokenKind.IDENTIFIER, "jugarLolsito")
+            ],
+
+            "42.43 < 45": [
+                lexer.Token(lexer.TokenKind.NUMBER, "42.43"),
+                lexer.Token(lexer.TokenKind.OPERATOR, "<"),
+                lexer.Token(lexer.TokenKind.NUMBER, "45")
+            ],
+
+            "222<<>>444": [
+                lexer.Token(lexer.TokenKind.NUMBER, "222"),
+                lexer.Token(lexer.TokenKind.OPERATOR, "<"),
+                lexer.Token(lexer.TokenKind.OPERATOR, "<"),
+                lexer.Token(lexer.TokenKind.OPERATOR, ">"),
+                lexer.Token(lexer.TokenKind.OPERATOR, ">"),
+                lexer.Token(lexer.TokenKind.NUMBER, "444")
+            ]
+        }
+
+        for key, value in valid_phrases.items():
+            self.assertEqual(lexer.tokenize(key), value)
+
+    def test_invalid_phrases(self):
+        invalid_phrases = [
+            "si @ entonces",
+            "mientras 66.666. hacer a()",
+        ]
+
+        for p in invalid_phrases:
+            self.assertRaises(lexer.TokenNotRecognisedError, lexer.tokenize, p)
