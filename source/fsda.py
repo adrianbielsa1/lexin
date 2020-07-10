@@ -3,7 +3,7 @@ from enum import auto, IntEnum, unique
 # Values are important here so we can prioritize.
 @unique
 class State(IntEnum):
-    REJECT = 0
+    TRAP = 0
     MAYBE = 1
     ACCEPT = 2
 
@@ -12,14 +12,14 @@ def _compare(actual: str, expected: str):
     if actual == expected:
         return State.ACCEPT
     elif len(actual) > len(expected):
-        return State.REJECT
+        return State.TRAP
     elif actual == expected[0 : len(actual)]:
         return State.MAYBE
     else:
-        return State.REJECT
+        return State.TRAP
 
 def operator(lexeme):
-    best_state = State.REJECT
+    best_state = State.TRAP
 
     for f in [operator_additive, operator_relational, operator_multiplicative]:
         best_state = max(best_state, f(lexeme))
@@ -27,7 +27,7 @@ def operator(lexeme):
     return best_state
 
 def operator_additive(lexeme):
-    best_state = State.REJECT
+    best_state = State.TRAP
 
     for expected in ["+", "-", "or"]:
         best_state = max(best_state, _compare(lexeme, expected))
@@ -38,7 +38,7 @@ def operator_additive(lexeme):
     return best_state
 
 def operator_relational(lexeme):
-    best_state = State.REJECT
+    best_state = State.TRAP
 
     for expected in ["==", ">=", "<=", "!=", ">", "<"]:
         best_state = max(best_state, _compare(lexeme, expected))
@@ -49,7 +49,7 @@ def operator_relational(lexeme):
     return best_state
 
 def operator_multiplicative(lexeme):
-    best_state = State.REJECT
+    best_state = State.TRAP
 
     for expected in ["*", "/", "mod", "and"]:
         best_state = max(best_state, _compare(lexeme, expected))
@@ -64,16 +64,16 @@ def number(lexeme):
 
     # The first character cannot be a dot.
     if lexeme[0] == ".":
-        return State.REJECT
+        return State.TRAP
 
     for i, c in enumerate(lexeme):
         if c == ".":
             dots += 1
 
             if dots > 1:
-                return State.REJECT
+                return State.TRAP
         elif not c.isdigit():
-            return State.REJECT
+            return State.TRAP
 
     # If the last character is a dot then the number is not complete.
     if c == ".":
@@ -83,11 +83,11 @@ def number(lexeme):
 
 def identifier(lexeme):
     if not lexeme[0].isalpha():
-        return State.REJECT
+        return State.TRAP
 
     for c in lexeme[1:]:
         if (not c.isalpha()) and (not c.isdigit()):
-            return State.REJECT
+            return State.TRAP
 
     return State.ACCEPT
 
@@ -97,7 +97,7 @@ def literal(lexeme):
 
     for c in lexeme[1 : len(lexeme) - 1]:
         if (not c.isdigit()) and (not c.isalpha()):
-            return State.REJECT
+            return State.TRAP
 
     # TODO: Maybe we can move one of those ifs above the for loop to avoid processing
     # each character if there are both no leading and trailing symbols.
@@ -106,7 +106,7 @@ def literal(lexeme):
     elif leading:
         return State.MAYBE
     else:
-        return State.REJECT
+        return State.TRAP
 
 def keyword_if(lexeme):
     return _compare(lexeme, "si")

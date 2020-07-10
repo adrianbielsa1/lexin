@@ -89,25 +89,25 @@ def tokenize(text: str) -> typing.List[Token]:
         last_accepted_tokens = []
         next_accepted_tokens = []
 
-        all_rejected    = False
+        all_trapped    = False
 
         while True:
             # Get all the FSDA that accept this lexeme.
             lexeme = text[start : index + 1]
-            next_accepted_tokens, all_rejected = _calculate_token_candidates(lexeme)
+            next_accepted_tokens, all_trapped = _calculate_token_candidates(lexeme)
 
             # No FSDA can accept this lexeme now, and never will. Leave!
-            if all_rejected:
+            if all_trapped:
                 break
 
-            # TODO: Review. Is it possible to go from accepted to maybe to rejected?
+            # TODO: Review. Is it possible to go from accepted to maybe to trapped?
             last_accepted_tokens = next_accepted_tokens
             index += 1
 
         if not last_accepted_tokens:
             raise TokenNotRecognisedError(lexeme)
 
-        # Trim the lexeme one character before every automaton rejected it and pick the most
+        # Trim the lexeme one character before every automaton trapped it and pick the most
         # relevant candidate token.
         lexeme = text[start : index]
         kind = last_accepted_tokens[0]
@@ -118,7 +118,7 @@ def tokenize(text: str) -> typing.List[Token]:
 
 def _calculate_token_candidates(lexeme: str) -> (typing.List[TokenKind], bool):
     accepting_candidates = []
-    all_rejected = True
+    all_trapped = True
 
     for kind, automaton in _kind_to_automaton.items():
         state = automaton(lexeme)
@@ -126,6 +126,6 @@ def _calculate_token_candidates(lexeme: str) -> (typing.List[TokenKind], bool):
         if state == fsda.State.ACCEPT:
             accepting_candidates.append(kind)
 
-        all_rejected = all_rejected and (state == fsda.State.REJECT)
+        all_trapped = all_trapped and (state == fsda.State.TRAP)
 
-    return accepting_candidates, all_rejected
+    return accepting_candidates, all_trapped
