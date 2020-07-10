@@ -9,20 +9,12 @@ class State(IntEnum):
 
 # Determines whether "actual" string is or can be the "expected" string.
 def _compare(actual: str, expected: str):
-    # Small cache.
-    actual_length = len(actual)
-    expected_length = len(expected)
-
-    if actual_length < expected_length:
-        if actual == expected[0 : actual_length]:
-            return State.MAYBE
-        else:
-            return State.REJECT
-    elif actual_length == expected_length:
-        if actual == expected:
-            return State.ACCEPT
-        else:
-            return State.REJECT
+    if actual == expected:
+        return State.ACCEPT
+    elif len(actual) > len(expected):
+        return State.REJECT
+    elif actual == expected[0 : len(actual)]:
+        return State.MAYBE
     else:
         return State.REJECT
 
