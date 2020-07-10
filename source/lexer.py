@@ -28,6 +28,9 @@ class TokenKind(enum.Enum):
     PARENTHESIS_OPEN = enum.auto(), # (
     PARENTHESIS_CLOSE = enum.auto(), # )
 
+    # Special symbols.
+    EOF = enum.auto(),
+
 @dataclasses.dataclass
 class Token:
     kind: TokenKind
@@ -113,6 +116,8 @@ def tokenize(text: str) -> typing.List[Token]:
         kind = last_accepted_tokens[0]
 
         tokens.append(Token(kind, lexeme))
+
+    tokens.append(Token(TokenKind.EOF, "EOF"))
 
     return tokens
 
