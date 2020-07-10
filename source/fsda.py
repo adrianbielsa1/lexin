@@ -94,18 +94,17 @@ def identifier(lexeme):
 def literal(lexeme):
     leading = lexeme.startswith("'")
     trailing = lexeme.endswith("'")
-    count = lexeme.count("'")
 
-    if count == 1:
-        if leading:
-            return State.MAYBE
-        else:
+    for c in lexeme[1 : len(lexeme) - 1]:
+        if (not c.isdigit()) and (not c.isalpha()):
             return State.REJECT
-    elif count == 2:
-        if leading and trailing:
-            return State.ACCEPT
-        else:
-            return State.REJECT
+
+    # TODO: Maybe we can move one of those ifs above the for loop to avoid processing
+    # each character if there are both no leading and trailing symbols.
+    if leading and trailing:
+        return State.ACCEPT
+    elif leading:
+        return State.MAYBE
     else:
         return State.REJECT
 
