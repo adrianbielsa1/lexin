@@ -107,7 +107,7 @@ def tokenize(text: str) -> typing.List[Token]:
             last_accepted_tokens = next_accepted_tokens
             index += 1
 
-        if not last_accepted_tokens:
+        if len(last_accepted_tokens) == 0:
             raise TokenNotRecognisedError(lexeme)
 
         # Trim the lexeme one character before every automaton trapped it and pick the most
