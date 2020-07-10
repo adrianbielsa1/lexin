@@ -10,7 +10,7 @@ tokens = lexin.lexer.tokenize("some string you want to tokenize 123")
 Alternatively, you may also check the unit tests in the [source](source/) folder, or run them
 from the command line interface using
 ```
-python -m unittest
+python -m unittest discover
 ```
 which discovers them on its own.
 ## ABOUT
