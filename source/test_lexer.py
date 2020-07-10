@@ -132,8 +132,8 @@ class TestPhrases(unittest.TestCase):
             ]
         }
 
-        for key, value in valid_phrases.items():
-            self.assertEqual(lexer.tokenize(key), value)
+        for actual, expected in valid_phrases.items():
+            self.assertEqual(lexer.tokenize(actual), expected)
 
     def test_invalid_phrases(self):
         invalid_phrases = [
@@ -141,5 +141,5 @@ class TestPhrases(unittest.TestCase):
             "mientras 66.666. hacer a()",
         ]
 
-        for p in invalid_phrases:
-            self.assertRaises(lexer.TokenNotRecognisedError, lexer.tokenize, p)
+        for phrase in invalid_phrases:
+            self.assertRaises(lexer.TokenNotRecognisedError, lexer.tokenize, phrase)
