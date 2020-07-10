@@ -3,14 +3,14 @@ from enum import auto, IntEnum, unique
 # Values are important here so we can prioritize.
 @unique
 class State(IntEnum):
-    REJECT  = 0
-    MAYBE   = 1
-    ACCEPT  = 2
+    REJECT = 0
+    MAYBE = 1
+    ACCEPT = 2
 
 # Determines whether "actual" string is or can be the "expected" string.
 def _compare(actual: str, expected: str):
     # Small cache.
-    actual_length   = len(actual)
+    actual_length = len(actual)
     expected_length = len(expected)
 
     if actual_length < expected_length:
@@ -100,9 +100,9 @@ def identifier(lexeme):
     return State.ACCEPT
 
 def literal(lexeme):
-    leading     = lexeme.startswith("'")
-    trailing    = lexeme.endswith("'")
-    count       = lexeme.count("'")
+    leading = lexeme.startswith("'")
+    trailing = lexeme.endswith("'")
+    count = lexeme.count("'")
 
     if count == 1:
         if leading:
