@@ -55,7 +55,7 @@ _kind_to_automaton = {
     TokenKind.BRACKET_OPEN: fsda.bracket_open,
     TokenKind.BRACKET_CLOSE: fsda.bracket_close,
     TokenKind.PARENTHESIS_OPEN: fsda.parenthesis_open,
-    TokenKind.PARENTHESIS_CLOSE: fsda.parenthesis_close
+    TokenKind.PARENTHESIS_CLOSE: fsda.parenthesis_close,
 
     TokenKind.NUMBER: fsda.number,
     TokenKind.IDENTIFIER: fsda.identifier,
