@@ -48,9 +48,6 @@ _kind_to_automaton = {
     TokenKind.PRINT: fsda.keyword_print,
 
     TokenKind.OPERATOR: fsda.operator,
-    TokenKind.NUMBER: fsda.number,
-    TokenKind.IDENTIFIER: fsda.identifier,
-    TokenKind.LITERAL: fsda.literal,
 
     TokenKind.COMMA: fsda.comma,
     TokenKind.SEMICOLON: fsda.semicolon,
@@ -59,6 +56,10 @@ _kind_to_automaton = {
     TokenKind.BRACKET_CLOSE: fsda.bracket_close,
     TokenKind.PARENTHESIS_OPEN: fsda.parenthesis_open,
     TokenKind.PARENTHESIS_CLOSE: fsda.parenthesis_close
+
+    TokenKind.NUMBER: fsda.number,
+    TokenKind.IDENTIFIER: fsda.identifier,
+    TokenKind.LITERAL: fsda.literal,
 }
 
 # Converts a stream of characters into a stream of tokens.
