@@ -119,7 +119,7 @@ class TestPhrases(unittest.TestCase):
                 lexer.Token(lexer.TokenKind.EOF, "EOF"),
             ],
 
-            "mientras tiempoLibre hacer jugarLolsito" : [
+            "mientras tiempoLibre hacer jugarLolsito": [
                 lexer.Token(lexer.TokenKind.WHILE, "mientras"),
                 lexer.Token(lexer.TokenKind.IDENTIFIER, "tiempoLibre"),
                 lexer.Token(lexer.TokenKind.DO, "hacer"),
