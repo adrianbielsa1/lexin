@@ -92,7 +92,7 @@ def tokenize(text: str) -> typing.List[Token]:
         last_accepted_tokens = []
         next_accepted_tokens = []
 
-        all_trapped    = False
+        all_trapped = False
 
         while True:
             # Get all the FSDA that accept this lexeme.
