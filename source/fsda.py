@@ -66,17 +66,21 @@ def number(lexeme):
     if lexeme[0] == ".":
         return State.TRAP
 
-    for i, c in enumerate(lexeme):
+    for c in lexeme:
+        if c.isdigit():
+            continue
+
         if c == ".":
             dots += 1
 
-            if dots > 1:
-                return State.TRAP
-        elif not c.isdigit():
-            return State.TRAP
+            if dots == 1:
+                continue
 
-    # If the last character is a dot then the number is not complete.
-    if c == ".":
+        # The character is either not a digit nor a dot (or the number of dots is out of the valid
+        # range).
+        return State.TRAP
+
+    if lexeme[-1] == ".":
         return State.MAYBE
     else:
         return State.ACCEPT
